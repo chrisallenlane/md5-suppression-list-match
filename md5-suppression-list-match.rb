@@ -21,19 +21,19 @@ require 'digest/md5'
 #  Menu
 #################################
 opts = Trollop::options do
-    opt :csv_file, 'The path to the CSV file',
+    opt :email_csv, 'The path to the CSV file containing subscriber email addresses',
         :short => 'c', :type => String,  :required => true
     
-    opt :csv_email_column, 'The column in the CSV file for email addresses',
+    opt :email_csv_column, 'The column in the subscriber CSV file containing email addresses',
         :short => 'e', :type => Integer, :default => 1
     
-    opt :database_file, 'Where to save the temporary database',
+    opt :database_file, 'Full path to the temporary database',
         :short => 'd', :type => String,  :default => '/tmp/md5-suppression-list.db'
     
-    opt :hash_file, 'The path to the file of hashes',
+    opt :hash_csv, 'The path to the CSV file of MD5 hashes',
         :short => 'f', :type => String,  :required => true
     
-    opt :invert, 'Returns email addresses which are NOT in the suppression list.',
+    opt :invert_matches, 'Return email addresses which are NOT in the suppression list.',
         :short => 'i', :default => false
     
     opt :output_file, 'Path to where the output file should be saved',
@@ -54,8 +54,8 @@ end
 # fifty email addresses in the CSV file.
 if opts[:test_given]
     emails_displayed = 0
-    CSV.foreach(opts[:csv_file]) do |row|
-        email = row[opts[:csv_email_column] - 1]       # count from zero
+    CSV.foreach(opts[:email_csv]) do |row|
+        email = row[opts[:email_csv_column] - 1]       # count from zero
         puts email
         
         # track the number of email addresses displayed
@@ -108,9 +108,9 @@ unless database_already_exists
 
     # load the email addresses and calculated hashes into the database
     imported_emails = 0
-    CSV.foreach(opts[:csv_file]) do |row|
+    CSV.foreach(opts[:email_csv]) do |row|
         # snag the email address and calculate the hash
-        email = row[opts[:csv_email_column] - 1].chomp       # count from zero
+        email = row[opts[:email_csv_column] - 1].chomp       # count from zero
         hash  = Digest::MD5.hexdigest(email)
         
         # insert the email address and hash into the database
@@ -143,7 +143,7 @@ unless database_already_exists
 
     # load hashes into the database
     imported_hashes = 0
-    CSV.foreach(opts[:hash_file]) do |hash|
+    CSV.foreach(opts[:hash_csv]) do |hash|
         stmt.execute hash
         
         # display progress
@@ -177,7 +177,7 @@ puts "Databases loaded. Finding matches..."
 output_buffer = ''
 
 # return emails addresses which are in the suppression list
-unless opts[:invert_given]
+unless opts[:invert_matches_given]
     database.execute("
         SELECT email
         FROM emails_and_hashes
