@@ -21,14 +21,29 @@ require 'digest/md5'
 #  Menu
 #################################
 opts = Trollop::options do
-    opt :csv_file,          'The path to the CSV file',                                         :short => 'c', :type => String,  :required => true
-    opt :csv_email_column,  'The column in the CSV file for email addresses',                   :short => 'e', :type => Integer, :default => 1
-    opt :database_file,     'Where to save the temporary database',                             :short => 'd', :type => String,  :default => '/tmp/md5-suppression-list.db'
-    opt :hash_file,         'The path to the file of hashes',                                   :short => 'f', :type => String,  :required => true
-    opt :invert,            'Returns email addresses which are NOT in the suppression list.',   :short => 'i', :default => false
-    opt :output_file,       'Path to where the output file should be saved',                    :short => 'o', :type => String,  :required => true
-    opt :preserve_database, 'If specified, will not delete the database after use.',            :short => 'p', :default => true # @todo: change this later
-    opt :test,              'Test the CSV parsing for email addresses.',                        :short => 't', :default => false
+    opt :csv_file, 'The path to the CSV file',
+        :short => 'c', :type => String,  :required => true
+    
+    opt :csv_email_column, 'The column in the CSV file for email addresses',
+        :short => 'e', :type => Integer, :default => 1
+    
+    opt :database_file, 'Where to save the temporary database',
+        :short => 'd', :type => String,  :default => '/tmp/md5-suppression-list.db'
+    
+    opt :hash_file, 'The path to the file of hashes',
+        :short => 'f', :type => String,  :required => true
+    
+    opt :invert, 'Returns email addresses which are NOT in the suppression list.',
+        :short => 'i', :default => false
+    
+    opt :output_file, 'Path to where the output file should be saved',
+        :short => 'o', :type => String,  :required => true
+    
+    opt :preserve_database, 'If specified, will not delete the database after use.',
+        :short => 'p', :default => true
+    
+    opt :test, 'Test the CSV parsing for email addresses.',
+        :short => 't', :default => false
 end
 
 
@@ -95,7 +110,7 @@ unless database_already_exists
     imported_emails = 0
     CSV.foreach(opts[:csv_file]) do |row|
         # snag the email address and calculate the hash
-        email = row[opts[:csv_email_column] - 1]       # count from zero
+        email = row[opts[:csv_email_column] - 1].chomp       # count from zero
         hash  = Digest::MD5.hexdigest(email)
         
         # insert the email address and hash into the database
@@ -174,14 +189,13 @@ unless opts[:invert_given]
 
 # return email address which are NOT in the suppression list
 else
-    # for some reason, this subquery seems to perform better than
-    # an OUTER JOIN
+    # SQLite3 doesn't support RIGHT OUTER JOINs, so we'll use a subquery
     database.execute("
-        SELECT email
+        SELECT emails_and_hashes.email
         FROM emails_and_hashes
-        WHERE hash NOT IN (
-            SELECT hash FROM hashes
-        );
+        WHERE emails_and_hashes.hash NOT IN (
+            SELECT hashes.hash FROM hashes
+        )
     ") do | row |
         output_buffer += row[0] + "\n"
     end
