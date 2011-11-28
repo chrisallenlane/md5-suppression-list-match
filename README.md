@@ -25,6 +25,13 @@ approaches the limits of your systems RAM. On-disk mode has no such
 limitation.
 
 
+Installation
+------------
+This script requires `ruby`, `rubygems`, and `sqlite3` to be installed on
+your system. It also requires that the `trollop` gem be installed. The
+script itself requires no installation, and can either be run directly
+or placed somewhere on your system PATH for convenience.
+
 
 Usage Examples
 --------------
