@@ -58,7 +58,7 @@ email addresses.
 
 Run `./md5-suppression-list-match --help` for an explanation of all options. Also feel free to play with the provided sample CSV files for practice using the script.
 
-###To accomodate long-running jobs
+###To accomodate long-running jobs:
 For long-running jobs (potentially 12+ hours for very, very long lists),
 you may want to preface any of the above commands with the `nohup`
 command, as in:
