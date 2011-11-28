@@ -23,7 +23,7 @@ require 'digest/md5'
 opts = Trollop::options do
     opt :csv_file,          'The path to the CSV file',                                         :short => 'c', :type => String,  :required => true
     opt :csv_email_column,  'The column in the CSV file for email addresses',                   :short => 'e', :type => Integer, :default => 1
-    opt :database_file,     'Where to save the temporary database',                             :short => 'd', :type => String,  :default => '/tmp/hash-unsubscribe.db'
+    opt :database_file,     'Where to save the temporary database',                             :short => 'd', :type => String,  :default => '/tmp/md5-suppression-list.db'
     opt :hash_file,         'The path to the file of hashes',                                   :short => 'f', :type => String,  :required => true
     opt :invert,            'Returns email addresses which are NOT in the suppression list.',   :short => 'i', :default => false
     opt :output_file,       'Path to where the output file should be saved',                    :short => 'o', :type => String,  :required => true
@@ -149,7 +149,7 @@ end
 #################################
 # build our database indexes if they have not yet been created
 unless database_already_exists
-    database.execute("CREATE INDEX index_hash ON emails_and_hashes(hash)")
+    database.execute("CREATE INDEX index_em_hash ON emails_and_hashes(hash)")
     database.execute("CREATE INDEX index_hash ON hashes(hash)")
 end
 
@@ -174,11 +174,14 @@ unless opts[:invert_given]
 
 # return email address which are NOT in the suppression list
 else
+    # for some reason, this subquery seems to perform better than
+    # an OUTER JOIN
     database.execute("
         SELECT email
         FROM emails_and_hashes
-        INNER JOIN hashes
-        ON emails_and_hashes.hash = hashes.hash
+        WHERE hash NOT IN (
+            SELECT hash FROM hashes
+        );
     ") do | row |
         output_buffer += row[0] + "\n"
     end
