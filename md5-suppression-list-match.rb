@@ -60,7 +60,7 @@ if opts[:test_given]
         
         # track the number of email addresses displayed
         emails_displayed += 1
-        if emails_displayed == 50
+        if emails_displayed == 20
             break
         end
     end
