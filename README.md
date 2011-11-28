@@ -51,7 +51,7 @@ email addresses.
 
     ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --in-memory --invert-matches
     
-To generate a whitelist based off of a large number of email addresses:
+###To generate a whitelist based off of a large number of email addresses:
 
     ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --invert-matches
 
