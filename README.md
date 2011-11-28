@@ -4,6 +4,7 @@ Chris Lane
 28 November 2011  
 chris@chris-allen-lane.com  
 http://chris-allen-lane.com  
+http://twitter.com/#!/chrisallenlane
 
 
 What it Does
@@ -56,6 +57,21 @@ email addresses.
     ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --invert-matches
 
 Run `./md5-suppression-list-match --help` for an explanation of all options. Also feel free to play with the provided sample CSV files for practice using the script.
+
+###To accomodate long-running jobs
+For long-running jobs (potentially 12+ hours for very, very long lists),
+you may want to preface any of the above commands with the `nohup`
+command, as in:
+
+    nohup ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --invert-matches
+    
+`nohup` (for "No Hangup") allows a job to continue to run even after the
+ parent process which spawned it (such an SSH connection) has closed. This
+ is thus very useful when (perhaps) offloading this matching job to a 
+ high-memory server (used for data warehousing or the like), letting the
+ job run overnight, and checking in the next morning.
+ 
+ You can learn more about `nohup` [on Wikipedia](http://en.wikipedia.org/wiki/Nohup).
 
 
 Known Issues
