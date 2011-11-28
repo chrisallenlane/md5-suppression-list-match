@@ -19,7 +19,7 @@ against an MD5 suppression list.
 
 This script has been can be run in one of two modes: either in-memory or
 on-disk. The in-memory mode is dramatically faster than the on-disk mode
-(which is the default), will cannot be used to process lists whose length
+(which is the default), but cannot be used to process lists whose length
 approaches the limits of your systems RAM. On-disk mode has no such
 limitation.
 
@@ -27,7 +27,7 @@ limitation.
 
 Usage Examples
 --------------
-To test CSV parsing:
+###To test CSV parsing:
 
     ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --test
 
@@ -38,16 +38,16 @@ starts from 1 rather than 0.
 The command above will display the first 25 lines of what it believes to be
 email addresses.
 
-To generate a blacklist based off of a small number of email addresses:
+###To generate a blacklist based off of a small number of email addresses:
 
     ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --in-memory
     
     
-To generate a blacklist based off of a large number of email addresses:
+###To generate a blacklist based off of a large number of email addresses:
 
     ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv
     
-To generate a whitelist based off of a small number of email addresses:
+###To generate a whitelist based off of a small number of email addresses:
 
     ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --in-memory --invert-matches
     
