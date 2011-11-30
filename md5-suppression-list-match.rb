@@ -77,7 +77,7 @@ end
 #################################
 #  Notify the user
 #################################
-unless opts[:invert_matches_given]
+if opts[:invert_matches_given]
     puts "Generating a whitelist of email addresses which you may continue to email."
 else
     puts "Generating a blacklist of email addresses which you may NO LONGER email."
