@@ -1,7 +1,7 @@
 md5-suppression-list-match
 =================
 Chris Lane  
-28 November 2011  
+1 Dec 2011  
 chris@chris-allen-lane.com  
 http://chris-allen-lane.com  
 http://twitter.com/#!/chrisallenlane
@@ -27,7 +27,7 @@ limitation.
 
 Installation
 ------------
-This script requires `ruby`, `rubygems`, and `sqlite3` to be installed on
+This script requires `ruby`, `rubygems` to be installed on
 your system. It also requires that the `trollop` gem be installed. The
 script itself requires no installation, and can either be run directly
 or placed somewhere on your system PATH for convenience.
@@ -35,50 +35,7 @@ or placed somewhere on your system PATH for convenience.
 
 Usage Examples
 --------------
-###To test CSV parsing:
-
-    ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --test
-
-Note that `--email-csv-column` specifies the column in your CSV file
-of user data containing email addresses, and that counting of columns
-starts from 1 rather than 0.
-
-The command above will display the first 25 lines of what it believes to be
-email addresses.
-
-###To generate a blacklist based off of a small number of email addresses:
-
-    ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --in-memory
-    
-    
-###To generate a blacklist based off of a large number of email addresses:
-
-    ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv
-    
-###To generate a whitelist based off of a small number of email addresses:
-
-    ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --in-memory --invert-matches
-    
-###To generate a whitelist based off of a large number of email addresses:
-
-    ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --invert-matches
-
-Run `./md5-suppression-list-match --help` for an explanation of all options. Also feel free to play with the provided sample CSV files for practice using the script.
-
-###To accomodate long-running jobs:
-For long-running jobs (potentially 12+ hours for very, very long lists),
-you may want to preface any of the above commands with the `nohup`
-command, as in:
-
-    nohup ./md5-suppression-list-match --email-csv /path/to/email.csv --email-csv-column 1 --hash-csv /path/to/hash.csv --output-file /path/to/output.csv --invert-matches
-    
-`nohup` (for "No Hangup") allows a job to continue to run even after the
- parent process which spawned it (such an SSH connection) has closed. This
- is thus very useful when (perhaps) offloading this matching job to a 
- high-memory server (used for data warehousing or the like), letting the
- job run overnight, and checking in the next morning.
- 
- You can learn more about `nohup` [on Wikipedia](http://en.wikipedia.org/wiki/Nohup).
+These are coming soon. A major re-write on the project has necessitated a re-write on the documentation, which I hope to get to within a few days.
 
 
 Known Issues
