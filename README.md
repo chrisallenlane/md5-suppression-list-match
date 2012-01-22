@@ -71,7 +71,7 @@ without killing its process. `nice` will assign the script's execution
 a lower priority, allowing your computer to stay more responsive while
 the script is running essentially in the background.
 
-No that `nice`-ing a process will likely make it take longer to complete,
+Know that `nice`-ing a process will likely make it take longer to complete,
 however.
 
 
