@@ -66,7 +66,7 @@ With that said, it may be helpful to run this script via the `nohup` and
 
     nohup nice ./md5-suppression-list-match -e /path/to/email.csv -c 1 -a /path/to/hashes.csv -o /home/username/Desktop
     
-`nohup` (No Hangup) allows you to close the terminal which started the script
+`nohup` (no hangup) allows you to close the terminal that started the script
 without killing its process. `nice` will assign the script's execution
 a lower priority, allowing your computer to stay more responsive while
 the script is running essentially in the background.
@@ -83,9 +83,8 @@ This script has no known issues, but has only been tested on Ubuntu
 
 Contact Me
 -------------
-If you have questions, concerns, bug reports, feature requests, offers
-for discount viagra, or whatever, feel free to contact me at
-chris@chris-allen-lane.com.
+If you have questions, concerns, bug reports, feature requests, etc, feel free
+to contact me at chris@chris-allen-lane.com.
 
 
 License
