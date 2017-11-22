@@ -1,3 +1,13 @@
+DEPRECATION NOTICE
+==================
+This software has been **DEPRECATED**. Please use `slm` instead:
+
+https://github.com/chrisallenlane/slm
+
+It serves the same purpose as this application, but is orders of magnitudes
+faster.
+
+
 md5-suppression-list-match
 =================
 Chris Lane  
